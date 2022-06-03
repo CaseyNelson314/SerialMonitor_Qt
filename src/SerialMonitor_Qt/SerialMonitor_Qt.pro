@@ -17,7 +17,6 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
-    Keyboard.h \
     SerialManager.h \
     UiList.h \
     mainwindow.h
