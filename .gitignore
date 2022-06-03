@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# user
+node_modules/
+build-SerialMonitor_Qt-Desktop_Qt_6_2_4_MinGW_64_bit-Debug
+*.user
+
