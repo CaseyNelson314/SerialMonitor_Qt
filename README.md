@@ -12,10 +12,6 @@ SerialMonitor on Qt
 
 ## Usege
 
-### Menu
-
-  - 
-
 ### Monitor
 
   - Scroll
