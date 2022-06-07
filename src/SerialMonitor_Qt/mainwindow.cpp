@@ -61,13 +61,13 @@ void MainWindow::connectPort()
         ui->SendButton->setEnabled(true);
         ui->PortLateComboBox->setEnabled(true);
         ui->PortStateButton->setText(Button::BOTTON_CLOSE);
-        setSerialMonitor(Log::PORTOPEN);
-        setLogMonitor(Log::CONNECT, "\t", true);
-        setLogMonitor(Log::PORTOPEN, "\t\t", true);
+        setSerialMonitor(Log::PORTOPEN, ui->TimestampCheckBox->isChecked());
+        setLogMonitor(Log::CONNECT, true);
+        setLogMonitor(Log::PORTOPEN, true);
     }else{ //ポートが開けない
         ui->PortStateButton->setText(Button::BOTTON_OPEN);
-        setSerialMonitor(Log::CANTOPEN);
-        setLogMonitor(Log::CANTOPEN, "\t\t", true);
+        setSerialMonitor(Log::CANTOPEN, ui->TimestampCheckBox->isChecked());
+        setLogMonitor(Log::CANTOPEN, true);
     }
 }
 
@@ -75,9 +75,9 @@ void MainWindow::disconnectPort()
 {
     if(serial->isClose())return;
     serial->close();
-    setSerialMonitor(Log::PORTCLOSE);
-    setLogMonitor(Log::DISCONNECT, "\t", true);
-    setLogMonitor(Log::PORTCLOSE, "\t\t", true);
+    setSerialMonitor(Log::PORTCLOSE, ui->TimestampCheckBox->isChecked());
+    setLogMonitor(Log::DISCONNECT, true);
+    setLogMonitor(Log::PORTCLOSE, true);
     portUpdate();
     if(ui->PortNameComboBox->currentText()!=Combo::PORT_NOFOUND){
         ui->PortStateButton->setEnabled(false);
@@ -102,7 +102,7 @@ void MainWindow::receiveEvent()
         sendText = receiveData;
 
     if(tabName==Menu::MONITOR || tabName==Menu::PROPERTY)
-        setSerialMonitor(sendText.trimmed());
+        setSerialMonitor(sendText.trimmed(), ui->TimestampCheckBox->isChecked());
 
 }
 
@@ -136,14 +136,14 @@ bool MainWindow::portUpdate() //通常ポートであるかどうかを返す Br
 void MainWindow::on_SendButton_clicked()
 {
     if(serial->isClose()){
-        setLogMonitor(Log::PORTISCLOSE, "", false);
+        setLogMonitor(Log::PORTISCLOSE, false);
         return;
     }
 
     QString sendData = ui->writeText->text();
     if(serial->isOpen() && sendData!=nullptr){
         serial->send(sendData);
-        setLogMonitor(sendData, "\t", false);
+        setLogMonitor(sendData, false);
     }
 
     ui->writeText->clear();
@@ -161,13 +161,13 @@ void MainWindow::on_PortLateComboBox_activated(int)
     if(serial->isOpen()){ //ポートが開けた
         ui->SendButton->setEnabled(true);
         ui->PortStateButton->setText(Button::BOTTON_CLOSE);
-        setSerialMonitor(Log::PORTOPEN);
-        setLogMonitor(Log::PORTOPEN, "\t\t", true);
+        setSerialMonitor(Log::PORTOPEN, ui->TimestampCheckBox->isChecked());
+        setLogMonitor(Log::PORTOPEN, true);
     }else{ //ポートが開けない
         ui->SendButton->setEnabled(false);
         ui->PortStateButton->setText(Button::BOTTON_OPEN);
-        setSerialMonitor(Log::CANTOPEN);
-        setLogMonitor(Log::CANTOPEN, "\t\t", true);
+        setSerialMonitor(Log::CANTOPEN, ui->TimestampCheckBox->isChecked());
+        setLogMonitor(Log::CANTOPEN, true);
     }
 }
 
@@ -188,14 +188,14 @@ void MainWindow::on_PortNameComboBox_activated(int)
         ui->PortStateButton->setEnabled(true);
         ui->SendButton->setEnabled(true);
         ui->PortStateButton->setText(Button::BOTTON_CLOSE);
-        setSerialMonitor(Log::PORTOPEN);
-        setLogMonitor(Log::PORTOPEN, "\t\t", true);
+        setSerialMonitor(Log::PORTOPEN, ui->TimestampCheckBox->isChecked());
+        setLogMonitor(Log::PORTOPEN, true);
     }else{ //ポートが開けない
         ui->PortLateComboBox->setEnabled(false);
         ui->SendButton->setEnabled(false);
         ui->PortStateButton->setText(Button::BOTTON_OPEN);
-        setSerialMonitor(Log::CANTOPEN);
-        setLogMonitor(Log::CANTOPEN, "\t\t", true);
+        setSerialMonitor(Log::CANTOPEN, ui->TimestampCheckBox->isChecked());
+        setLogMonitor(Log::CANTOPEN, true);
     }
 }
 
@@ -205,21 +205,21 @@ void MainWindow::on_PortStateButton_clicked()
         serial->close();
         ui->SendButton->setEnabled(false);
         ui->PortStateButton->setText(Button::BOTTON_OPEN);
-        setSerialMonitor(Log::PORTCLOSE);
-        setLogMonitor(Log::PORTCLOSE, "\t\t", true);
+        setSerialMonitor(Log::PORTCLOSE, ui->TimestampCheckBox->isChecked());
+        setLogMonitor(Log::PORTCLOSE, true);
     }else{ //ポートを開ける
         if(portUpdate())serial->open();
 
         if(serial->isOpen()){ //ポートが開けた
             ui->SendButton->setEnabled(true);
             ui->PortStateButton->setText(Button::BOTTON_CLOSE);
-            setSerialMonitor(Log::PORTOPEN);
-            setLogMonitor(Log::PORTOPEN, "\t\t", true);
+            setSerialMonitor(Log::PORTOPEN, ui->TimestampCheckBox->isChecked());
+            setLogMonitor(Log::PORTOPEN, true);
         }else{ //ポートが開けない
             ui->SendButton->setEnabled(false);
             ui->PortStateButton->setText(Button::BOTTON_OPEN);
-            setSerialMonitor(Log::CANTOPEN);
-            setLogMonitor(Log::CANTOPEN, "\t\t", true);
+            setSerialMonitor(Log::CANTOPEN, ui->TimestampCheckBox->isChecked());
+            setLogMonitor(Log::CANTOPEN, true);
         }
 
     }

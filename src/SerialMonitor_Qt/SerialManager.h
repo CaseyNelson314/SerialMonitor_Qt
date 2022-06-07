@@ -15,7 +15,7 @@ class SerialManager : public QObject
 public:
     SerialManager(QObject *parent=nullptr);
 
-    void setPortName(QString portName);
+    void setPortName(const QString &ortName);
     void setPortlate(qint32 portlate);
 
     void setInterval(qint32 delay);
@@ -29,7 +29,7 @@ public:
 
     void clearError();
 
-    void send(QString sendData); //.toStdString().c_str()
+    void send(const QString &sendData); //.toStdString().c_str()
 
     qint32 portCount();
     QByteArray getReceiveData();
@@ -54,11 +54,11 @@ private:
     QSerialPort *serial;
 
     bool isIntervalError = true;
-    QString portName;
-    qint32 portlate;
-    qint32 intervalUs;
+    QString    portName;
+    qint32     portlate;
+    qint32     intervalUs;
+    qint32     lastPortCount;  //前回検索時のポート数
     QByteArray receiveData;
-    qint32 lastPortCount;
 
     std::chrono::system_clock::time_point lastTime;
 };

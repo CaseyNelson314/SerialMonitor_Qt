@@ -53,9 +53,9 @@ private:
     void moveEvent(QMoveEvent *)override; //ウィンドウ移動時のry
 
     //Monitor.cpp
-    void setSerialMonitor(QString str);
+    void setSerialMonitor(const QString &str, bool isTimesptampMode);
 
-    void setLogMonitor(QString str, QString space, bool showPortData);
+    void setLogMonitor(const QString &str, bool showPortData);
 
     Ui::MainWindow *ui;
 };

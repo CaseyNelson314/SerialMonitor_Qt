@@ -37,8 +37,9 @@
    <string>QtSerialMonitor</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="SerialPortIcon">
-    <normaloff>.</normaloff>.</iconset>
+   <iconset>
+    <normalon>../../../serial_port_icon_138204.png</normalon>
+   </iconset>
   </property>
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>

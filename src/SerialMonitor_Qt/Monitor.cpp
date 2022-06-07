@@ -4,31 +4,40 @@
 #include <QDateTime>
 #include <QPlainTextEdit>
 
-void MainWindow::setSerialMonitor(QString str)
+QString &space(int spaceSize);
+
+void MainWindow::setSerialMonitor(const QString &str, bool isTimesptampMode)
 {
-    if(ui->TimestampCheckBox->isChecked()){
-        QString time = QDateTime::currentDateTime().toString("mm : ss . zzz");
+    if(isTimesptampMode){
+        const QString time = QDateTime::currentDateTime().toString("mm : ss . zzz");
         ui->SerialMonitor->appendPlainText(time + "    >\t" + str);
         ui->subSerialMonitor->setText(time + "    >\t" + str);
-    }else{
+    }
+    else{
         ui->SerialMonitor->appendPlainText(str);
         ui->subSerialMonitor->setText(str);
     }
-
 }
 
-void MainWindow::setLogMonitor(QString str, QString space, bool showPortData)
+void MainWindow::setLogMonitor(const QString &str, bool showPortData)
 {
-    QString time = QDateTime::currentDateTime().toString("hh : mm : ss . zzz");
 
-    QString portName = ui->PortNameComboBox->currentText();
-    QString portlate = ui->PortLateComboBox->currentText();
+    const QString time = QDateTime::currentDateTime().toString("hh : mm : ss . zzz");
 
+    const QString portName = ui->PortNameComboBox->currentText();
+    const QString portlate = ui->PortLateComboBox->currentText();
 
     if(showPortData==false)
-        ui->LogMonitor->append(time + "    >\t" + str + space);
+        ui->LogMonitor->append(time + "    " + str);
     else
-        ui->LogMonitor->append(time + "    >\t" + str + space + portName + "\t" + portlate + "bps");
+        ui->LogMonitor->append(time + "    " + portName + "    " + portlate + "bps" + "    " + str);
 
 }
 
+
+QString &space(int spaceSize){
+    static QString str;
+    str = "";
+    for(int i = 0; i < spaceSize; i++)str += " ";  // append space 'spaceSize' times
+    return str;
+}

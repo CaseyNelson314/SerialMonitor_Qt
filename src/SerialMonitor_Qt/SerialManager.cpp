@@ -11,11 +11,20 @@ SerialManager::SerialManager(QObject *parent) : QObject(parent)
     searchPort();
 }
 
-void SerialManager::setPortName(QString portName){ this->portName = portName; }
+void SerialManager::setPortName(const QString &portName)
+{
+    this->portName = portName;
+}
 
-void SerialManager::setPortlate(qint32 portlate){ this->portlate = portlate; }
+void SerialManager::setPortlate(qint32 portlate)
+{
+    this->portlate = portlate;
+}
 
-void SerialManager::setInterval(qint32 intervalUs){ this->intervalUs = intervalUs; }
+void SerialManager::setInterval(qint32 intervalUs)
+{
+    this->intervalUs = intervalUs;
+}
 
 void SerialManager::open()
 {
@@ -42,25 +51,46 @@ void SerialManager::claer()
         serial->clear();
 }
 
-bool SerialManager::isOpen(){ return serial->isOpen(); }
+bool SerialManager::isOpen()
+{
+    return serial->isOpen();
+}
 
-bool SerialManager::isClose(){ return !serial->isOpen(); }
+bool SerialManager::isClose()
+{
+    return !serial->isOpen();
+}
 
-void SerialManager::clearError(){ isIntervalError = false; }
+void SerialManager::clearError()
+{
+    isIntervalError = false;
+}
 
-void SerialManager::send(QString sendData)
+void SerialManager::send(const QString &sendData)
 {
     if(serial->isOpen())
         serial->write(sendData.toStdString().c_str());
 }
 
-qint32 SerialManager::portCount(){ return QSerialPortInfo::availablePorts().count(); }
+qint32 SerialManager::portCount()
+{
+    return QSerialPortInfo::availablePorts().count();
+}
 
-QByteArray SerialManager::getReceiveData(){ return receiveData; }
+QByteArray SerialManager::getReceiveData()
+{
+    return receiveData;
+}
 
-QList<QSerialPortInfo> SerialManager::portNameList(){ return QSerialPortInfo::availablePorts(); }
+QList<QSerialPortInfo> SerialManager::portNameList()
+{
+    return QSerialPortInfo::availablePorts();
+}
 
-QList<qint32> SerialManager::portlateList(){ return QSerialPortInfo::standardBaudRates(); }
+QList<qint32> SerialManager::portlateList()
+{
+    return QSerialPortInfo::standardBaudRates();
+}
 
 void SerialManager::receiveEvent() //受信割り込み
 {
@@ -69,11 +99,13 @@ void SerialManager::receiveEvent() //受信割り込み
     auto rowReceiveInterval = nowTime - lastTime;
     auto receiveInterval = std::chrono::duration_cast<std::chrono::microseconds>(rowReceiveInterval).count(); //ミリ秒に変換
 
-    //データ量が多い場合のアプリ落ち防止
-    if(receiveInterval <= intervalUs){ //ここなぜかよく呼び出される
+    //データ量が多い(受信間隔が狭すぎる)場合のアプリ落ち防止
+    if(receiveInterval < intervalUs){
         if(serial->isOpen())serial->clear(); //バッファ削除
         return;
     }
+
+    lastTime = std::chrono::system_clock::now(); //最後の受信時刻を保存
 
     if(serial->canReadLine()==false)return;
     while (serial->canReadLine()){
@@ -81,7 +113,6 @@ void SerialManager::receiveEvent() //受信割り込み
         emit receive();
     }
 
-    lastTime = std::chrono::system_clock::now(); //最後の受信時刻を保存
 }
 
 void SerialManager::searchPort() //ポート検索用タイマー割り込み
