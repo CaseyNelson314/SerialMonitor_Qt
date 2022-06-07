@@ -91,18 +91,22 @@ void MainWindow::receiveEvent()
 {
     const QString tabName = ui->MonitorSelector->tabText(ui->MonitorSelector->currentIndex());
 
-    QString sendText;
+    QString sendText = "";
 
     QByteArray receiveData = serial->getReceiveData();
 
     if(ui->BinCheckBox->isChecked()) //digits > binary
-        for (auto i = 0; i < receiveData.size(); ++i)
-            sendText.append(QString::number(receiveData[i], 2) + "\t");
+        for (qsizetype i = 0; i < receiveData.size(); ++i){
+
+            qDebug() << i;
+//            sendText += QString::number(receiveData[i], 2);
+//            sendText += "\t";
+        }
     else
         sendText = receiveData;
 
     if(tabName==Menu::MONITOR || tabName==Menu::PROPERTY)
-        setSerialMonitor(sendText.trimmed(), ui->TimestampCheckBox->isChecked());
+        setSerialMonitor(sendText, ui->TimestampCheckBox->isChecked());
 
 }
 
