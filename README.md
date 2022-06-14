@@ -4,11 +4,13 @@ SerialMonitor on Qt
 
 シリアルモニターを QT creator で作ってみました
 
+<h2><a href="https://github.com/CaseyNelson314/SerialMonitor_Qt/releases/download/qt/release.zip">Download</a></h2>
+
 ## Demo
 
 ポートが接続されると自動的に受信内容が表示されます
 
-<img height=800 src="https://user-images.githubusercontent.com/91818705/171824071-a2f0f551-368a-47d0-868d-9301782ce182.png">
+<img width=800 src="https://user-images.githubusercontent.com/91818705/171824071-a2f0f551-368a-47d0-868d-9301782ce182.png">
 
 ## Usege
 
