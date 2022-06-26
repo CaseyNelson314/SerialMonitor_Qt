@@ -4,7 +4,7 @@ SerialMonitor on Qt
 
 シリアルモニターを QT creator で作ってみました
 
-<h2><a href="https://github.com/CaseyNelson314/SerialMonitor_Qt/releases/download/qt/release.zip">Download</a></h2>
+<h2><a href="https://github.com/CaseyNelson314/SerialMonitor_Qt/releases/download/qt/SerialMonitorQt.zip">Download</a></h2>
 
 ## Demo
 
