@@ -18,7 +18,7 @@ void loop() {
 //  Serial.print(millis());     //hoge?!?!?!?
 //  Serial.print("\n");
 
-  int buf = Serial.read();   // get character
+  const char buf = Serial.read();   // get character
 
   static bool flag;
   flag ^= (buf == 'a');   //出力反転
