@@ -12,7 +12,7 @@ SerialMonitor on Qt
 
 <img width=800 src="https://user-images.githubusercontent.com/91818705/171824071-a2f0f551-368a-47d0-868d-9301782ce182.png">
 
-## Usege
+## Usage
 
 ### Monitor
 
