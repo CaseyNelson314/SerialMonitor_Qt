@@ -40,7 +40,7 @@ SerialMonitor on Qt
 
 ### Plottor
   
-  - まだできてないですぅ～～(グラフを表示する予定)
+  - 未完成(グラフを表示する予定)
   
 
 ### Property
